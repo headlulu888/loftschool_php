@@ -21,42 +21,51 @@ function task2($operation, ...$numbers) {
     switch ($operation) {
         case '+':
             $sum = 0;
-            foreach ($numbers as $number) {
-                $sum += $number;
+            foreach ($numbers as $num) {
+                $sum += $num;
             }
+
             return $sum;
             break;
+
         case '-':
-            $ex = $numbers[0];
+            $sub = $numbers[0];
             for ($i = 1; $i < count($numbers); $i++) {
-                $ex -= $numbers[$i];
+                $sub -= $numbers[$i];
             }
-            return $ex;
+
+            return $sub;
             break;
+
         case '*':
-            $mult = 1;
-            foreach ($numbers as $number) {
-                $mult *= $number;
+            $mul = 1;
+            foreach ($numbers as $num) {
+                $mul *= $num;
             }
-            return $mult;
+
+            return $mul;
             break;
+
         case '/':
-            $hasZero = 1;
+            $has_zero = 1;
             for ($i = 1; $i < count($numbers); $i++) {
-                $hasZero *= $numbers[$i];
+                $has_zero *= $numbers[$i];
             }
-            if ($hasZero) {
+
+            if($has_zero) {
                 $div = $numbers[0];
                 for ($i = 1; $i < count($numbers); $i++) {
                     $div /= $numbers[$i];
                 }
+
                 return $div;
             } else {
-                echo 'Вы хотите поделить на ноль, побойтесь Бога';
+                echo "Делить на 0 нельзя !!!";
             }
             break;
+
         default:
-            echo 'Недопустимая операция. Выберите +,-,*,/';
+            echo 'Недопустимая операция. Выберете +, -, *, /';
     }
 }
 

@@ -1,16 +1,20 @@
 <?php
 
 //Задание 1
-function task1($str_arr, $bool = false) {
-    if ($bool) {
-        $concat = implode(' ', $str_arr);
-        return $concat;
-    } else {
-        foreach ($str_arr as $str) {
-            echo '<p>' . $str . '</p>';
+function task1($arr, $bool = false) {
+    if($bool == false) {
+        foreach ($arr as $ar) {
+            echo "<p>$ar</p>";
         }
+    } elseif($bool == true) {
+        $str = "";
+        foreach ($arr as $ar) {
+            $str .= $ar;
+        }
+
+        echo $str;
     }
-};
+}
 
 //Задание 2
 function task2($operation, ...$numbers) {
@@ -58,28 +62,20 @@ function task2($operation, ...$numbers) {
 
 //Задание 3
 function task3($num1, $num2) {
-    if ($num1 ==0 || $num2 ==0) {
-        echo 'Аргументы не должны равняться 0';
-    } else {
-        echo '<table>';
-        echo '<thead>';
-        echo '<tr>';
-        echo  '<td style = "font-weight: bold;">N</td>';
-        for ($j = 1; $j <= $num2; $j++) {
-            echo '<td style = "font-weight: bold;">' . $j . '</td>';
-        }
-        echo '</tr>';
-        echo '</thead>';
-        echo '<tbody>';
-        for ($i = 1; $i <= $num1; $i++) {
-            echo '<tr><td style = "font-weight: bold;">'. $i . '</td>';
-            for ($j = 1; $j <= $num2; $j++) {
-                echo '<td>' . $i * $j . '</td>';
+    if(is_int($num1) && is_int($num2)) {
+        echo "<table border='1'>";
+        for($i = $num1; $i <= $num2; $i++) {
+            echo "<tr>";
+            for($j = $num1; $j <= $num2; $j++) {
+                echo "<td>";
+                echo $j . "x" . $i . "=" . ($i * $j);
+                echo "</td>";
             }
-            echo '</tr>';
+            echo "</tr>";
         }
-        echo '</tbody>';
-        echo '</table>';
+        echo "</table>";
+    } else {
+        throw new Exception();
     }
 }
 
@@ -100,9 +96,10 @@ function task5() {
 }
 
 //Задание 6
-function task6($filename) {
-    $file = fopen($filename, 'w');
-    fwrite($file, 'Hello again!');
-    readfile($filename);
-    fclose($file);
+function task6($file_name) {
+    $file_name = $file_name . ".txt";
+    $fn = fopen($file_name, 'w');
+    fwrite($fn, 'Hello again!');
+    readfile($file_name);
+    fclose($fn);
 }

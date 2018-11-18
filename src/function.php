@@ -18,20 +18,26 @@ function task1($strings, $clue = false) {
 
 //Задание 2
 function task2($operation, ...$numbers) {
+    if($operation == '/' && in_array(0, $numbers)) {
+        echo 'Делить на 0 нельзя';
+        return null;
+    }
+
+    $all_variable_are_numbers = true;
     foreach ($numbers as $num) {
-        if(!is_integer($num)) {
+        if(!is_numeric($num)) {
             echo 'Введите число';
+            $all_variable_are_numbers = true;
             break;
         }
     }
 
-    if($operation == '/' && in_array(0, $numbers)) {
-        echo 'Делить на 0 нельзя';
+    if(!$all_variable_are_numbers) {
+        echo 'Неверный тип аргументов. Приведите к Int или Float';
     }
 
-    $number_string = implode($operation, $numbers);
-    $result = eval('return ' . $number_string . ';');
-    echo $number_string . ' = ' . $result;
+    $expression = implode($operation, $numbers);
+    echo $expression . ' = ' . eval('return ' . $expression . ';');
 
 }
 

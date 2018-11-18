@@ -11,6 +11,7 @@ $(document).ready(function() {
                 dataType: 'html',
                 data: data,
             }).done(function(response) {
+                console.log(response);
                 var jsoned = JSON.parse(response);
                 if(jsoned.success) {
                     $('#success').addClass("popup_active");

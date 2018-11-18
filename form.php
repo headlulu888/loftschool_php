@@ -44,7 +44,8 @@ try {
 
 // Есть ли покупатель с данным email
 try {
-    $user_select->execute(':email', $email);
+    $user_select->bindParam(':email', $email);
+    $user_select->execute();
 } catch(PDOException $e) {
     $response['success'] = 0;
     $response['message'] = 'Ошибка подключения по email' . $e->getMessage();
@@ -59,8 +60,12 @@ $user_data = $user_select->fetchAll();
 switch ($user_select->rowCount()) {
     case 0:
         try {
-            $user_create->execute([':name' => $name, ':phone' => $phone, ':email' => $email]);
-            $user_select->execute([':email', $email]);
+            $user_create->bindParam(':name', $name);
+            $user_create->bindParam(':phone', $phone);
+            $user_create->bindParam(':email', $email);
+            $user_create->execute();
+            $user_select->bindParam(':email', $email);
+            $user_select->execute();
         } catch(PDOException $e) {
             $response['success'] = 0;
             $response['message'] = 'Ошибка создани и чтения нового пользователя' . $e->getMessage();
@@ -89,8 +94,18 @@ switch ($user_select->rowCount()) {
 
 // Создаем новый заказ
 try {
-    $order_create->execute([':user_id' => $id, ':street' => $street, ':house' => $house, ':part' => $part, ':appt' => $appt, ':floor' => $floor, ':payment' => $payment, ':callback' => $callback, ':comment' => $comment]);
-    $order_select->execute([':user_id', $id]);
+    $order_create->bindParam(':user_id', $id);
+    $order_create->bindParam(':street', $street);
+    $order_create->bindParam(':house', $house);
+    $order_create->bindParam(':part', $part);
+    $order_create->bindParam(':appt', $appt);
+    $order_create->bindParam(':floor', $floor);
+    $order_create->bindParam(':payment', $payment);
+    $order_create->bindParam(':callback', $callback);
+    $order_create->bindParam(':comment', $comment);
+    $order_create->execute();
+    $order_select->bindParam(':user_id', $id);
+    $order_select->execute();
 } catch (PDOException $e) {
     $response['success'] = 0;
     $response['message'] = 'Ошибка создания нового заказа' . $e->getMessage();
@@ -104,7 +119,7 @@ $mail_title = 'Заказ №' . $orders[0]['maxid'] . ' от ' . date('d.M.Y H:
 $mail_text = 'Ваш заказ DarkBeefBurger 1шт 500р. будет доставлен по адресу: Улица.' . $street . ', дом.' . $house . ', корпус.' .  $part . ', этаж.' . $floor .  'Это Ваш ' . $orders[0]['total'] . ' заказ. Спасибо';
 
 // Запись в файл
-$file_path = 'letters/' . $mail_title . '.txt';
+$file_path = '/letters/' . $mail_title . '.txt';
 file_put_contents($file_path, $mail_text);
 
 // Отправка на почту

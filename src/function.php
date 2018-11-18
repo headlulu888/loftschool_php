@@ -1,96 +1,62 @@
 <?php
 
 //Задание 1
-function task1($arr, $bool = false) {
-    if($bool == false) {
-        foreach ($arr as $ar) {
-            echo "<p>$ar</p>";
+function task1($strings, $clue = false) {
+    if($clue == false) {
+        foreach ($strings as $string) {
+            echo "<p>$string</p>";
         }
-    } elseif($bool == true) {
-        $str = "";
-        foreach ($arr as $ar) {
-            $str .= $ar;
+    } elseif($clue == true) {
+        $result = "";
+        foreach ($strings as $string) {
+            $result .= $string;
         }
 
-        echo $str;
+        echo $result;
     }
 }
 
 //Задание 2
 function task2($operation, ...$numbers) {
-    switch ($operation) {
-        case '+':
-            $sum = 0;
-            foreach ($numbers as $num) {
-                $sum += $num;
-            }
-
-            return $sum;
+    foreach ($numbers as $num) {
+        if(!is_integer($num)) {
+            echo 'Введите число';
             break;
-
-        case '-':
-            $sub = $numbers[0];
-            for ($i = 1; $i < count($numbers); $i++) {
-                $sub -= $numbers[$i];
-            }
-
-            return $sub;
-            break;
-
-        case '*':
-            $mul = 1;
-            foreach ($numbers as $num) {
-                $mul *= $num;
-            }
-
-            return $mul;
-            break;
-
-        case '/':
-            $has_zero = 1;
-            for ($i = 1; $i < count($numbers); $i++) {
-                $has_zero *= $numbers[$i];
-            }
-
-            if($has_zero) {
-                $div = $numbers[0];
-                for ($i = 1; $i < count($numbers); $i++) {
-                    $div /= $numbers[$i];
-                }
-
-                return $div;
-            } else {
-                echo "Делить на 0 нельзя !!!";
-            }
-            break;
-
-        default:
-            echo 'Недопустимая операция. Выберете +, -, *, /';
+        }
     }
+
+    if($operation == '/' && in_array(0, $numbers)) {
+        echo 'Делить на 0 нельзя';
+    }
+
+    $number_string = implode($operation, $numbers);
+    $result = eval('return ' . $number_string . ';');
+    echo $number_string . ' = ' . $result;
+
 }
 
 //Задание 3
-function task3($num1, $num2) {
-    if(is_int($num1) && is_int($num2)) {
+function task3($first_number, $second_number) {
+    if(is_int($first_number) && is_int($second_number)) {
         echo "<table border='1'>";
-        for($i = $num1; $i <= $num2; $i++) {
+        for($row = $first_number; $row <= $second_number; $row++) {
             echo "<tr>";
-            for($j = $num1; $j <= $num2; $j++) {
+            for($col = $first_number; $col <= $second_number; $col++) {
                 echo "<td>";
-                echo $j . "x" . $i . "=" . ($i * $j);
+                echo $col . ' x ' . $row . ' = ' . ($row * $col);
                 echo "</td>";
             }
             echo "</tr>";
         }
         echo "</table>";
     } else {
-        throw new Exception();
+        echo 'Введите только целые числа';
     }
 }
 
 //Задание 4
 function task4() {
-    echo 'Текущее время: ' . date('d.m.y H:i') . '<br>';
+    echo 'Текущее время: ' . date('d.m.y H:i:s') . '<br>';
     echo 'Unixtime время для 24.02.2016 00:00:00 --' . strtotime('24.02.2016 00:00:00');
 }
 
@@ -107,8 +73,8 @@ function task5() {
 //Задание 6
 function task6($file_name) {
     $file_name = $file_name . ".txt";
-    $fn = fopen($file_name, 'w');
-    fwrite($fn, 'Hello again!');
-    readfile($file_name);
-    fclose($fn);
+    $file_text = 'Hello again!';
+    file_put_contents($file_name, $file_text);
+    echo file_get_contents($file_name);
+
 }

@@ -73,7 +73,7 @@ function task5() {
     echo 'Стало: ' . str_replace('К', '', $str1) . '<br>'. '<br>';
     $str2 = 'Две бутылки лимонада';
     echo 'Было: ' . $str2 . '<br>';
-    echo 'Стало: ' . mb_ereg_replace('Две', 'Три', $str2);
+    echo 'Стало: ' . str_replace('Две', 'Три', $str2);
 }
 
 //Задание 6

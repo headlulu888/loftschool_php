@@ -42,6 +42,8 @@ try {
     die;
 }
 
+
+
 // Есть ли покупатель с данным email
 try {
     $user_select->bindParam(':email', $email);
@@ -115,7 +117,8 @@ try {
 
 // Готовим письмо к отправке
 $orders = $order_select->fetchAll();
-$mail_title = 'Заказ №' . $orders[0]['maxid'] . ' от ' . date('d.M.Y H:i:s');
+var_dump($orders);
+$mail_title = 'Заказ №' . $orders[0]['maxid'] . ' от ' . date('d.m.Y H-i-s');
 $mail_text = 'Ваш заказ DarkBeefBurger 1шт 500р. будет доставлен по адресу: Улица.' . $street . ', дом.' . $house . ', корпус.' .  $part . ', этаж.' . $floor .  'Это Ваш ' . $orders[0]['total'] . ' заказ. Спасибо';
 
 // Запись в файл
@@ -125,12 +128,14 @@ file_put_contents($file_path, $mail_text);
 // Отправка на почту
 try {
     mail('headlulu888@gmail.com', $mail_title, $mail_text);
+    $is_sent = 1;
 } catch (Exception $e) {
     $is_sent = 0;
 }
 
 // AJAX скрипт
 $response['success'] = 1;
+//var_dump($is_sent);
 if($is_sent) {
     $response['message'] = 'Заказ успешно создан, письмо отправлено.';
 } else {
@@ -139,4 +144,5 @@ if($is_sent) {
 
 $response['order_num'] = $orders[0]['maxid'];
 $response['total'] = $orders[0]['total'];
+print_r($orders[0]['maxid']);
 echo json_encode($response);

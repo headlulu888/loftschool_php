@@ -124,3 +124,43 @@ function task2() {
         }
     }
 }
+
+// Задание 3
+function task3() {
+    $numbers=[];
+    for ($i = 0; $i <50; $i++) {
+        $numbers[$i] = rand(1, 100);
+    }
+
+    $file = fopen('numbers.csv', 'w');
+    fputcsv($file, $numbers, ';');
+    fclose($file);
+
+    $file = fopen('numbers.csv', 'r');
+    $array= fgetcsv($file, 10000, ';');
+    fclose($file);
+
+    $even = function ($var) {
+        return (!($var & 1));
+    };
+
+    $evenArray = array_filter($array, $even);
+    $sum = array_sum($evenArray);
+    return $sum;
+}
+
+// Задание 4
+function task4() {
+    $url = 'https://en.wikipedia.org/w/api.php?action=query&titles=Main%20Page&prop=revisions&r
+vprop=content&format=json';
+    $stream = fopen($url, 'rb');
+    $content = stream_get_contents($stream);
+
+    $decode_content = json_decode($content, true);
+
+    $res = [];
+    $res['title'] = $decode_content['query']['pages']['15580374']['title'];
+    $res['pageid'] = $decode_content['query']['pages']['15580374']['pageid'];
+
+    return $res;
+}

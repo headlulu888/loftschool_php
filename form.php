@@ -118,11 +118,11 @@ try {
 // Готовим письмо к отправке
 $orders = $order_select->fetchAll();
 var_dump($orders);
-$mail_title = 'Заказ №' . $orders[0]['maxid'] . ' от ' . date('d.m.Y H-i-s');
+$mail_title = 'Заказ №' . $orders[0]['maxid'] . ' от ' . date('d.m.Y');
 $mail_text = 'Ваш заказ DarkBeefBurger 1шт 500р. будет доставлен по адресу: Улица.' . $street . ', дом.' . $house . ', корпус.' .  $part . ', этаж.' . $floor .  'Это Ваш ' . $orders[0]['total'] . ' заказ. Спасибо';
 
 // Запись в файл
-$file_path = '/letters/' . $mail_title . '.txt';
+$file_path = './letters/' . $mail_title . '.txt';
 file_put_contents($file_path, $mail_text);
 
 // Отправка на почту

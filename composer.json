@@ -1,0 +1,22 @@
+{
+    "name": "ray-pc/loftschool_php",
+    "description": "project2",
+    "authors": [
+        {
+            "name": "Andrey Makhnev",
+            "email": "headlulu888@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        }
+    },
+    "require": {
+        "twig/twig": "^2.5",
+        "illuminate/database": "^5.7",
+        "fzaninotto/faker": "^1.8",
+        "symfony/dotenv": "^4.1",
+        "intervention/image": "^2.4"
+    }
+}
